@@ -1,0 +1,87 @@
+<h1 class="title"><%= @play.title %></h1>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="acts-tab" data-bs-toggle="tab" data-bs-target="#acts" type="button" role="tab" aria-controls="home" aria-selected="true">Acts</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="characters-tab" data-bs-toggle="tab" data-bs-target="#characters" type="button" role="tab" aria-controls="profile" aria-selected="false">Characters</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="acts" role="tabpanel" aria-labelledby="acts-tab">
+    <div class="container">
+      </br>
+      <div class="accordion" id="accordionExample">
+        <% @play.acts.each_with_index do |act, index| %>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="<%= 'heading-' + index.to_s %>">
+              <button class="accordion-button <%= "collapsed" if index!=0 %>" type="button" data-bs-toggle="collapse"
+                      data-bs-target="<%= '#collapse-' + index.to_s %>" aria-expanded="<%= index==0 %>"
+                      aria-controls="<%= 'collapse-' + index.to_s %>">
+                <%= act.title %>
+              </button>
+            </h2>
+            <div id="<%= 'collapse-' + index.to_s %>" class="accordion-collapse collapse <%= "show" if index==0 %>"
+                 aria-labelledby="<%= 'heading' + index.to_s %>" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+
+                <div class="bd-spy">
+                  <div class="row">
+
+                    <div class="col-4">
+                      <div id="list-example" class="list-group">
+                        <% act.scenes.each_with_index do |scene, i| %>
+                          <a class="list-group-item list-group-item-action"
+                             href="#list-item-<%= index.to_s + '-' + i.to_s %>"><%= scene.title %></a>
+                        <% end %>
+                      </div>
+                    </div>
+
+                    <div class="col-8 overflow-auto" style="max-height: 400px;">
+                      <div data-bs-spy="bd-spy" data-bs-target="#list-example" data-bs-offset="0" class="overflow-auto" tabindex="0">
+                        <% act.scenes.each_with_index do |scene, i| %>
+                          <h4 class="text-center" id="list-item-<%= index.to_s + '-' + i.to_s %>"><%= scene.title %></h4>
+                          <% scene.speeches.each do |speech| %>
+                            <h6>Speaker: <%= speech.speaker %></h6>
+                            <% speech.lines.each do |line| %>
+                              <p> * <%= line %></p>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade" id="characters" role="tabpanel" aria-labelledby="characters-tab">
+    </br>
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% @play.characters.each do |character| %>
+          <div class="col">
+            <div class="card" style="width: 18rem;">
+              <%= image_tag("character.jfif", alt: '', class: "card-img-top") %>
+              <div class="card-body">
+                <h5 class="card-title"><%= character %></h5>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Lines by Character: <%= @play.lines_by_character character %></li>
+                <li class="list-group-item">Words by Character: <%= @play.words_by_character(character).size %></li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
