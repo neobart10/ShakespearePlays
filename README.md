@@ -1,24 +1,19 @@
-# README
+#Play Analyzer
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application allows to scrap a list of plays and their url's where the user
+can find out a xml about the play.
 
-Things you may want to cover:
+In addition this application provide some tools to analyze a play that can be
+feed either making a http request to get the xml or by passing the xml as file.
 
-* Ruby version
+# Testing and Implementation
 
-* System dependencies
+  You can start to implement this base on the tests
+  The version of ruby used for this app is Ruby 2.2
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  then enter to the app directory `cd basic_scraping`. Once you do those steps
+  execute `bundle install` to install the gems and finally execute `rspec` and
+  start to implement the files and make test tests pass in green.
+# Run page
+  
+  You can start page execute `rails s`
